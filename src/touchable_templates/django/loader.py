@@ -28,6 +28,10 @@ IDE_TO_URI_MAPPER = {
 }
 
 
+def _is_third_party(filename: str) -> bool:
+    return "site-packages" in filename or "dist-packages" in filename
+
+
 def _get_setting_or_env(name):
     # Prefer Django setting, fall back to environment variable
     return getattr(settings, name, None) or os.environ.get(name)
@@ -81,6 +85,10 @@ class TouchableTemplatesLoader(FileSystemLoader):
         try:
             template_name = getattr(origin, "template_name", None) or getattr(origin, "name", "")
             filename = getattr(origin, "name", "")
+
+            if _is_third_party(filename):
+                return source
+
             return _inject_ide_link(source, template_name, filename)
         except Exception:
             logger.exception("touchable_templates: failed to inject IDE link into Django template")
@@ -106,6 +114,10 @@ class TouchableTemplatesAppDirectoriesLoader(AppDirectoriesLoader):
         try:
             template_name = getattr(origin, "template_name", None) or getattr(origin, "name", "")
             filename = getattr(origin, "name", "")
+
+            if _is_third_party(filename):
+                return source
+
             return _inject_ide_link(source, template_name, filename)
         except Exception:
             logger.exception("touchable_templates: failed to inject IDE link into Django app template")

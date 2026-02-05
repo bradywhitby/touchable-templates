@@ -103,6 +103,8 @@ Click on any element on the page to open the corresponding template in your conf
 - Use `TOUCHABLE_TEMPLATES_REMOVE_PREFIX` to strip any leading path segments that are
   not part of the local filesystem path (e.g. if your project runs in a Docker container
   with a different root path).
+- Touchable-templates only processes templates that are part of your project.
+  It skips templates that are part of third-party packages (e.g. in `site-packages` or `dist-packages`).
 
 ## Troubleshooting
 

@@ -1,6 +1,6 @@
 [project]
 name = "touchable-templates"
-version = "2026.02.1a"
+version = "2026.02.6a"
 description = "A dev tool that magically opens templates and partials in your IDE"
 readme = "README.md"
 license = "MIT"
@@ -22,10 +22,5 @@ url = "https://test.pypi.org/simple/"
 publish-url = "https://test.pypi.org/legacy/"
 explicit = true
 
-[tool.hatch.build]
-include = [
-    "src/touchable_templates/static/**",
-]
 [tool.hatch.build.targets.wheel]
 packages = ["src/touchable_templates"]
-

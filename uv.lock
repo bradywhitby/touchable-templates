@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.10"
 
 [[package]]
@@ -26,7 +26,7 @@ wheels = [
 
 [[package]]
 name = "touchable-templates"
-version = "2026.2"
+version = "2026.2.6a0"
 source = { editable = "." }
 dependencies = [
     { name = "beautifulsoup4" },
