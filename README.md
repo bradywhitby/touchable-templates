@@ -49,7 +49,25 @@ MIDDLEWARE = [
 ]
 ```
 
-3. Configure enablement and IDE mapping. You can set these via environment variables or
+3. Add the template loaders.
+
+```py
+TEMPLATES = [
+    {
+        # ...
+        "OPTIONS": {
+            "loaders": [
+                # "touchable_templates.django.loader.TouchableCottonLoader", # Uncomment if using django-cotton
+                "touchable_templates.django.loader.TouchableTemplatesLoader",
+                "touchable_templates.django.loader.TouchableTemplatesAppDirectoriesLoader",
+                # ...
+            ],
+        },
+    },
+]
+```
+
+4. Configure enablement and IDE mapping. You can set these via environment variables or
    in `settings.py`. Example (development):
 
 ```py
@@ -82,7 +100,7 @@ TOUCHABLE_TEMPLATES_REMOVE_PREFIX = "project/root/in/docker/container"
 - `vscodium`
 - `xdebug`
 
-4. Include the client JavaScript in your base template (requires `django.contrib.staticfiles`):
+5. Include the client JavaScript in your base template (requires `django.contrib.staticfiles`):
 Add Script tag at the end of the body, or in the head.
 
 ```django

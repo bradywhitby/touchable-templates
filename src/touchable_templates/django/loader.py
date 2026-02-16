@@ -4,6 +4,11 @@ from django.conf import settings
 import os
 import logging
 
+try:
+    from django_cotton.cotton_loader import Loader as CottonLoader
+except Exception:  # django-cotton not installed
+    CottonLoader = None
+
 logger = logging.getLogger(__name__)
 
 IDE_TO_URI_MAPPER = {
@@ -122,3 +127,22 @@ class TouchableTemplatesAppDirectoriesLoader(AppDirectoriesLoader):
         except Exception:
             logger.exception("touchable_templates: failed to inject IDE link into Django app template")
             return source
+
+
+if CottonLoader:
+    class TouchableCottonLoader(CottonLoader):
+        def get_contents(self, origin):
+            source = super().get_contents(origin)  # Cotton transforms happen here
+            enabled = _get_setting_or_env("TOUCHABLE_TEMPLATES_ENABLE")
+            if not enabled:
+                return source
+
+            try:
+                template_name = getattr(origin, "template_name", None) or getattr(origin, "name", "")
+                filename = getattr(origin, "name", "")
+                if _is_third_party(filename):
+                    return source
+                return _inject_ide_link(source, template_name, filename)
+            except Exception:
+                logger.exception("touchable_templates: failed to inject IDE link into Cotton template")
+                return source

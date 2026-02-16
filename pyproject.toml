@@ -1,6 +1,6 @@
 [project]
 name = "touchable-templates"
-version = "2026.02.6a"
+version = "2026.02.8a"
 description = "A dev tool that magically opens templates and partials in your IDE"
 readme = "README.md"
 license = "MIT"
